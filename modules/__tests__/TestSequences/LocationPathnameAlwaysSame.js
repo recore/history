@@ -11,15 +11,16 @@ export default function(history, done) {
     },
     location => {
       expect(location).toMatchObject({
-        pathname: '/歴史'
+        pathname: '/%E6%AD%B4%E5%8F%B2'
       });
+
       // encoded object
       const pathname = '/%E6%AD%B4%E5%8F%B2';
       history.replace({ pathname });
     },
     location => {
       expect(location).toMatchObject({
-        pathname: '/歴史'
+        pathname: '/%E6%AD%B4%E5%8F%B2'
       });
       // unencoded string
       const pathname = '/歴史';
