@@ -211,4 +211,29 @@ describe('a browser history', () => {
       });
     });
   });
+
+  describe('that does pathInQuery work', () => {
+    let history;
+    beforeEach(() => {
+      window.history.replaceState(null, null, '/prefix?__id=%2Fbase%2Fslug');
+      history = createBrowserHistory({
+        basename: '/base',
+        pathInQuery: '__id',
+      });
+    });
+
+    it('parse pathname from query', () => {
+      expect(history.location.pathname).toEqual('/slug');
+    });
+
+    it('pathname to query', () => {
+      const href = history.createHref({
+        pathname: '/the/path',
+        search: '?the=query',
+        hash: '#the-hash'
+      });
+
+      expect(href).toEqual('/prefix?the=query&__id=%2Fbase%2Fthe%2Fpath#the-hash');
+    });
+  });
 });
