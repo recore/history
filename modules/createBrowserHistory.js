@@ -7,6 +7,7 @@ import {
   createPath,
   formatQuery,
   parseQuery,
+  stripLeadingSlash,
 } from './PathUtils.js';
 import createTransitionManager from './createTransitionManager.js';
 import {
@@ -60,7 +61,7 @@ function createBrowserHistory(props = {}) {
 
     domPathname = window.location.pathname || '/';
 
-    const pathname = pathInQuery ? (parseQuery(search)[pathInQuery] || '/') : domPathname;
+    const pathname = pathInQuery ? addLeadingSlash(parseQuery(search)[pathInQuery] || '') : domPathname;
 
     let path = pathname + search + hash;
 
@@ -158,7 +159,7 @@ function createBrowserHistory(props = {}) {
   function createHref(location) {
     if (pathInQuery) {
       const query = parseQuery(location.search);
-      query[pathInQuery] = basename + location.pathname;
+      query[pathInQuery] = stripTrailingSlash(stripLeadingSlash(basename + location.pathname));
 
       return createPath({
         ...location,
