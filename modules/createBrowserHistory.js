@@ -4,7 +4,9 @@ import {
   stripTrailingSlash,
   hasBasename,
   stripBasename,
-  createPath
+  createPath,
+  formatQuery,
+  parseQuery,
 } from './PathUtils.js';
 import createTransitionManager from './createTransitionManager.js';
 import {
@@ -43,6 +45,7 @@ function createBrowserHistory(props = {}) {
 
   const {
     forceRefresh = false,
+    pathInQuery,
     getUserConfirmation = getConfirmation,
     keyLength = 6
   } = props;
@@ -50,9 +53,14 @@ function createBrowserHistory(props = {}) {
     ? stripTrailingSlash(addLeadingSlash(props.basename))
     : '';
 
+  let domPathname = '/';
   function getDOMLocation(historyState) {
     const { key, state } = historyState || {};
-    const { pathname, search, hash } = window.location;
+    const { search, hash } = window.location;
+
+    domPathname = window.location.pathname || '/';
+
+    const pathname = pathInQuery ? (parseQuery(search)[pathInQuery] || '/') : domPathname;
 
     let path = pathname + search + hash;
 
@@ -148,6 +156,16 @@ function createBrowserHistory(props = {}) {
   // Public interface
 
   function createHref(location) {
+    if (pathInQuery) {
+      const query = parseQuery(location.search);
+      query[pathInQuery] = basename + location.pathname;
+
+      return createPath({
+        ...location,
+        pathname: domPathname,
+        search: '?' + formatQuery(query),
+      });
+    }
     return basename + createPath(location);
   }
 
