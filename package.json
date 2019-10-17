@@ -78,5 +78,8 @@
   "keywords": [
     "history",
     "location"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
