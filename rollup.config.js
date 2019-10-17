@@ -14,10 +14,12 @@ function external(id) {
   return !id.startsWith('.') && !id.startsWith('/');
 }
 
+const name = 'history';
+
 const cjs = [
   {
     input,
-    output: { file: `cjs/${pkg.name}.js`, format: 'cjs' },
+    output: { file: `cjs/${name}.js`, format: 'cjs' },
     external,
     plugins: [
       babel({ exclude: /node_modules/ }),
@@ -26,7 +28,7 @@ const cjs = [
   },
   {
     input,
-    output: { file: `cjs/${pkg.name}.min.js`, format: 'cjs' },
+    output: { file: `cjs/${name}.min.js`, format: 'cjs' },
     external,
     plugins: [
       babel({ exclude: /node_modules/ }),
@@ -39,7 +41,7 @@ const cjs = [
 const esm = [
   {
     input,
-    output: { file: `esm/${pkg.name}.js`, format: 'esm' },
+    output: { file: `esm/${name}.js`, format: 'esm' },
     external,
     plugins: [
       babel({
@@ -55,7 +57,7 @@ const esm = [
 const umd = [
   {
     input,
-    output: { file: `umd/${pkg.name}.js`, format: 'umd', name: globalName },
+    output: { file: `umd/${name}.js`, format: 'umd', name: globalName },
     plugins: [
       babel({
         exclude: /node_modules/,
@@ -70,7 +72,7 @@ const umd = [
   },
   {
     input,
-    output: { file: `umd/${pkg.name}.min.js`, format: 'umd', name: globalName },
+    output: { file: `umd/${name}.min.js`, format: 'umd', name: globalName },
     plugins: [
       babel({
         exclude: /node_modules/,
