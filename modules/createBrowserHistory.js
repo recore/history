@@ -195,9 +195,15 @@ function createBrowserHistory(props = {}) {
         const { key, state } = location;
 
         if (canUseHistory) {
-          globalHistory.pushState({ key, state }, null, href);
+          let caughtError = false;
 
-          if (forceRefresh) {
+          try {
+            globalHistory.pushState({ key, state }, null, href);
+          } catch (e) {
+            caughtError = true;
+          }
+
+          if (forceRefresh || caughtError) {
             window.location.href = href;
           } else {
             const prevIndex = allKeys.indexOf(history.location.key);
@@ -245,9 +251,15 @@ function createBrowserHistory(props = {}) {
         const { key, state } = location;
 
         if (canUseHistory) {
-          globalHistory.replaceState({ key, state }, null, href);
+          let caughtError = false;
 
-          if (forceRefresh) {
+          try {
+            globalHistory.replaceState({ key, state }, null, href);
+          } catch (e) {
+            caughtError = true;
+          }
+
+          if (forceRefresh || caughtError) {
             window.location.replace(href);
           } else {
             const prevIndex = allKeys.indexOf(history.location.key);
