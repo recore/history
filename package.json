@@ -1,6 +1,6 @@
 {
   "name": "@recore/history",
-  "version": "4.11.1",
+  "version": "4.11.2",
   "description": "Manage session history with JavaScript",
   "repository": "ReactTraining/history",
   "license": "MIT",
@@ -8,6 +8,7 @@
   "main": "index.js",
   "module": "esm/history.js",
   "unpkg": "umd/history.js",
+  "types": "types",
   "files": [
     "DOMUtils.js",
     "ExecutionEnvironment.js",
